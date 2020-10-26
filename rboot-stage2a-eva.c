@@ -11,8 +11,6 @@
 
 #include "rboot-private.h"
 
-/*@ requires readpos != 0;
-@*/ 
 usercode* NOINLINE load_rom(uint32_t readpos) {
 	
 	uint8_t sectcount;
@@ -41,13 +39,10 @@ usercode* NOINLINE load_rom(uint32_t readpos) {
 		writepos = section.address;
 		remaining = section.length;
 		
-		/*@ loop variant remaining;
-		  @*/
 		while (remaining > 0) {
 			// work out how much to read, up to 4k bytes at a time
 
 			uint32_t readlen = (remaining < READ_SIZE) ? remaining : READ_SIZE;
-			//@ assert 0 < readlen <= 4096; Unnecessary?
 			// read the block
 			SPIRead(readpos, writepos, readlen);
 			readpos += readlen;
@@ -58,19 +53,14 @@ usercode* NOINLINE load_rom(uint32_t readpos) {
 		}
 	}
 
-	//@ assert \dangling {Here} (&usercode);
 	return usercode;
 }
 
 //#ifdef BOOT_NO_ASM
 
-/*@ requires readpos != 0;
-@*/ 
 void call_user_start(uint32_t readpos) {
 	usercode* user;
 	user = load_rom(readpos);
-	//@ assert \dangling {Here} (&user);
-	//@ assert \valid_function ((void (*)(void)) user);
 	user();
 }
 
