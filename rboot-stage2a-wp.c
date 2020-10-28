@@ -47,7 +47,8 @@ usercode* NOINLINE load_rom(uint32_t readpos) {
 			// work out how much to read, up to 4k bytes at a time
 
 			uint32_t readlen = (remaining < READ_SIZE) ? remaining : READ_SIZE;
-			//@ assert 0 < readlen <= 4096; Unnecessary?
+			//@ assert 0 < readlen <= 4096;
+			// Unnecessary assert?
 			// read the block
 			SPIRead(readpos, writepos, readlen);
 			readpos += readlen;
@@ -64,6 +65,23 @@ usercode* NOINLINE load_rom(uint32_t readpos) {
 
 //#ifdef BOOT_NO_ASM
 
+uint32_t SPIRead(uint32_t addr, void *outptr, uint32_t len){
+	char* read = (char*) addr;
+	char* out = (char*) outptr;
+	while(len > 0){
+		if(read != 0 && out != 0){
+			*out = 1; //using *read here causes seg fault
+			++out;
+			++read;
+			--len;
+		}
+		else{
+			return 1;
+		}
+	}
+	return 0;
+ }
+ 
 /*@ requires readpos != 0;
 @*/ 
 void call_user_start(uint32_t readpos) {

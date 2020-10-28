@@ -1,4 +1,4 @@
-(* Frama-C journal generated at 11:14 the 23/10/2020 *)
+(* Frama-C journal generated at 11:21 the 28/10/2020 *)
 
 exception Unreachable
 exception Exception of string
@@ -7,124 +7,13 @@ exception Exception of string
 
 (* Run the user commands *)
 let run () =
-  Dynamic.Parameter.Bool.set "-wp" true;
-  Dynamic.Parameter.String.set "" "rboot-stage2a.c";
+  Dynamic.Parameter.Bool.set "-eva" true;
+  Dynamic.Parameter.String.set "-main" "call_user_start";
+  Dynamic.Parameter.String.set "" "rboot-stage2a-eva.c";
   File.init_from_cmdline ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Dynamic.Parameter.Bool.clear "-wp" ();
+  !Db.Value.compute ();
   Project.set_keep_current false;
   Dynamic.Parameter.String.set "-wp-cache" "update";
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
   ()
 
 (* Main *)

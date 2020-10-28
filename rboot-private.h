@@ -23,7 +23,8 @@
 #define READ_SIZE 0x1000
 
 // esp8266 built in rom functions
-extern uint32_t SPIRead(uint32_t addr, void *outptr, uint32_t len);
+ uint32_t SPIRead(uint32_t addr, void *outptr, uint32_t len);
+
 extern uint32_t SPIEraseSector(int);
 extern uint32_t SPIWrite(uint32_t addr, void *inptr, uint32_t len);
 extern void ets_printf(char*, ...);

@@ -12,7 +12,6 @@
 #include "rboot-private.h"
 
 usercode* NOINLINE load_rom(uint32_t readpos) {
-	
 	uint8_t sectcount;
 	uint8_t *writepos;
 	uint32_t remaining;
@@ -22,7 +21,8 @@ usercode* NOINLINE load_rom(uint32_t readpos) {
 	section_header section;
 	
 	// read rom header
-	SPIRead(readpos, &header, sizeof(rom_header));
+	header = (rom_header){1, 1, 1, 1, 1};
+//	SPIRead(readpos, &header, sizeof(rom_header)); ///SPIRead er extern. Body bliver fundet a "linker".
 	readpos += sizeof(rom_header);
 
 	// create function pointer for entry point
@@ -32,7 +32,8 @@ usercode* NOINLINE load_rom(uint32_t readpos) {
 	for (sectcount = header.count; sectcount > 0; sectcount--) {
 		
 		// read section header
-		SPIRead(readpos, &section, sizeof(section_header));
+		section = (section_header){1,1};
+		//SPIRead(readpos, &section, sizeof(section_header));
 		readpos += sizeof(section_header);
 
 		// get section address and length
@@ -44,7 +45,9 @@ usercode* NOINLINE load_rom(uint32_t readpos) {
 
 			uint32_t readlen = (remaining < READ_SIZE) ? remaining : READ_SIZE;
 			// read the block
-			SPIRead(readpos, writepos, readlen);
+			*writepos = 1;
+			//SPIRead(readpos, writepos, readlen);
+			
 			readpos += readlen;
 			// increment next write position
 			writepos += readlen;
@@ -63,6 +66,24 @@ void call_user_start(uint32_t readpos) {
 	user = load_rom(readpos);
 	user();
 }
+
+
+uint32_t SPIRead(uint32_t addr, void *outptr, uint32_t len){
+	char* read = (char*) addr;
+	char* out = (char*) outptr;
+	while(len > 0){
+		if(read != 0 && out != 0){
+			*out = 1; //using *read here causes seg fault
+			++out;
+			++read;
+			--len;
+		}
+		else{
+			return 1;
+		}
+	}
+	return 0;
+ }
 
 /*#else
 void call_user_start(uint32_t readpos) {
